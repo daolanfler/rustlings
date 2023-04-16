@@ -1,7 +1,23 @@
 // iterators4.rs
 // Execute `rustlings hint iterators4` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+use std::iter::Iterator;
+
+struct Factor(u64);
+
+impl Iterator for Factor {
+    type Item = u64;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let n = self.0;
+        if n == 0 {
+            None
+        } else {
+            self.0 = n - 1;
+            Some(n)
+        }
+    }
+}
 
 pub fn factorial(num: u64) -> u64 {
     // Complete this function to return the factorial of num
@@ -13,6 +29,13 @@ pub fn factorial(num: u64) -> u64 {
     // For an extra challenge, don't use:
     // - recursion
     // Execute `rustlings hint iterators4` for hints.
+
+    // if num == 0 {
+    //     1
+    // } else {
+    //     num * factorial(num - 1)
+    // }
+    Factor(num).fold(1, |acc, x| acc * x)
 }
 
 #[cfg(test)]
